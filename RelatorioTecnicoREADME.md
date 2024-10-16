@@ -11,7 +11,8 @@ Ao acessar o link vai encontrar a documentação dos endpoints das API`s. São e
 
 - Api Usuarios
 
-![alt text](<Captura de Tela 2024-10-15 às 23.10.49.png>)
+![image](https://github.com/user-attachments/assets/b7014158-104d-47b2-91e1-f27e0f0de2a5)
+
 
 - Api Troca
 
