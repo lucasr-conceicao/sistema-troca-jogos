@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: sistema-troca-jogos
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    defer-datasource-initialization: true
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console.enabled: true
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:my-secret-key}
