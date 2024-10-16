@@ -14,6 +14,8 @@ comunidade, criando laços e momentos inesquecíveis no universo dos games.
 - `Funcionalidade 1` <br><br>
 `API de autenticação`: A API tem como objetivo permitir que uma pessoa cadastre e logue no sistema.
 </br>
+
+
 ```
 curl --request POST \
   --url http://localhost:8080/api-autenticar/v1/cadastrar \
@@ -28,20 +30,32 @@ curl --request POST \
 	"preferenciaDeTroca": "Correio"
 }'
 ```
+
+
 ```
-dasd
+curl --request POST \
+  --url http://localhost:8080/api-autenticar/v1/login \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/10.0.0' \
+  --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1 \
+  --data '{
+	"username":"luquinha98",
+	"senha":"Ku8&*"
+}'
 ```
 
 #### 
 - `Funcionalidade 2` <br><br> 
 `API de gestão de usuario`: A API tem como objetivo permitir o gerenciamento de informações sobre os usuarios cadastrados em nosso sistema. 
 </br>
+
 ```
 curl --request GET \
   --url http://localhost:8080/api-usuarios/v1/buscar/134218cf-a119-43ca-91f2-680bc590584c \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
 ```
 curl --request PUT \
   --url http://localhost:8080/api-usuarios/v1/atualizar/134218cf-a119-43ca-91f2-680bc590584c \
@@ -56,6 +70,7 @@ curl --request PUT \
 	"preferenciaDeTroca": "Correio"
 }'
 ```
+
 ```
 curl --request DELETE \
   --url http://localhost:8080/api-usuarios/v1/deletar/134218cf-a119-43ca-91f2-680bc590584c \
@@ -68,6 +83,7 @@ curl --request DELETE \
 - `Funcionalidade 3` <br><br>
 `API de gestão de jogos`: A API tem como objetivo permitir o gerenciamento de informações sobre os jogos cadastrados em nosso sistema. 
 </br>
+
 ```
 curl --request POST \
   --url http://localhost:8080/api-jogos/v1/cadastrar \
@@ -81,6 +97,7 @@ curl --request POST \
 	"usuario":"56ec3fa4-74a8-40b3-9974-bd2770edc987"
 }'
 ```
+
 ```
 curl --request PUT \
   --url http://localhost:8080/api-jogos/v1/atualizar/5c9ae35d-d1c4-4a90-a9fb-1c1f4c0284cf \
@@ -94,6 +111,7 @@ curl --request PUT \
 	"usuario": "56ec3fa4-74a8-40b3-9974-bd2770edc980"
 }'
 ```
+
 ```
 curl --request GET \
   --url http://localhost:8080/api-jogos/v1/listar/jogos \
@@ -107,12 +125,14 @@ curl --request GET \
 	"usuario":"56ec3fa4-74a8-40b3-9974-bd2770edc980"
 }'
 ```
+
 ```
 curl --request GET \
   --url http://localhost:8080/api-jogos/v1/buscar/db1b4a41-320b-40ab-a1a4-a21321114cc3 \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
 ```
 curl --request DELETE \
   --url http://localhost:8080/api-jogos/v1/deletar/db1b4a41-320b-40ab-a1a4-a21321114cc3 \
@@ -124,6 +144,7 @@ curl --request DELETE \
 - `Funcionalidade 4` <br><br>
 `API de gestão de troca`: A API tem como objetivo permitir o gerenciamento de propostas de troca de jogos feitas pelos usuarios da plataforma.
 </br>
+
 ```
 curl --request POST \
   --url http://localhost:8080/api-propostas-troca/v1/cadastrar \
@@ -137,12 +158,14 @@ curl --request POST \
   "usuarioOfertante": "56ec3fa4-74a8-40b3-9974-bd2770edc987"
 }'
 ```
+
 ```
 curl --request GET \
   --url http://localhost:8080/api-propostas-troca/v1/listar/usuario_ofertante/56ec3fa4-74a8-40b3-9974-bd2770edc987 \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
 ```
 curl --request PUT \
   --url http://localhost:8080/api-propostas-troca/v1/responder/dbfdf865-be6a-4ef8-9bbc-32b2765dd594/aceitar \
@@ -172,6 +195,7 @@ curl --request DELETE \
 - `Funcionalidade 5` <br><br>
 `API de gestão de mensagens`: API responsável pelo envio de mensagens
 </br>
+
 ```
 curl --request POST \
   --url http://localhost:8080/api/mensagem/enviar \
@@ -184,6 +208,7 @@ curl --request POST \
 	"conteudo":"oi, boa tarde!"
 }'
 ```
+
 ```
 curl --request GET \
   --url http://localhost:8080/api/mensagem/13b23f87-17de-45c9-a4ef-f89e7e743c0c \
