@@ -3,7 +3,7 @@ INSERT INTO tb_usuario (id, username, password, nome, email, preferencia_de_troc
 ('8a065017-bd3b-4dbf-acb9-9ac6ea323aa6', 'RM999999', 'Gnr9&*', 'Generico', 'generico-fiap@hotmail.com', 'Presencial');
 
 INSERT INTO tb_jogos (id, titulo, descricao, data_cadastro, usuario_id) VALUES
-('5c9ae35d-d1c4-4a90-a9fb-1c1f4c0284cf', 'F1 2024', 'Formula 1', '2024-10-13 16:18:12', (SELECT id FROM tb_usuario WHERE username = 'luquinha98')),
+('5c9ae35d-d1c4-4a90-a9fb-1c1f4c0284cf', 'F1 2024', 'Formula 1', '2024-10-13 16:18:12', (SELECT id FROM tb_usuario WHERE username = 'RM349225')),
 ('db1b4a41-320b-40ab-a1a4-a21321114cc3', 'FC 24', 'Futebol Clube 2024', '2024-10-13 16:18:12', (SELECT id FROM tb_usuario WHERE username = 'roberta99'));
 --
 INSERT INTO tb_proposta_troca (id, status_troca, data_criacao, jogo_oferecido_id, jogo_desejado_id, usuario_ofertante_id, usuario_destinatario_id) VALUES
