@@ -26,11 +26,11 @@ public class TabelaMensagem {
     @Column(name = "data_envio_mensagem")
     private LocalDateTime dataEnvioMensagem;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trade_id")
     private TabelaPropostaTroca trade;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuario_id")
     private TabelaUsuario usuario;
 }

@@ -86,7 +86,7 @@ public class UsuarioService {
 
     private UsuarioDTOResponse converterEntityEmDTO(TabelaUsuario usuario) {
         return UsuarioDTOResponse.builder()
-                .id(UUID.randomUUID())
+                .id(usuario.getId())
                 .nome(usuario.getNome())
                 .senha(usuario.getPassword())
                 .email(usuario.getEmail())

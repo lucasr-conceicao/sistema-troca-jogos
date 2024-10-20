@@ -2,6 +2,7 @@ package br.com.jogos.handler;
 
 import br.com.jogos.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,6 +22,11 @@ public class ControllerHandler {
 
     @ExceptionHandler(NotFoundException.class)
     private ResponseEntity<JsonHandler> handlerNotFoundException(NotFoundException ex, HttpServletRequest httpServlet) {
+        return montarRetorno(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), httpServlet.getRequestURI(), ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    private ResponseEntity<JsonHandler> handlerDataIntegrityViolationException(NotFoundException ex, HttpServletRequest httpServlet) {
         return montarRetorno(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), httpServlet.getRequestURI(), ex.getMessage());
     }
 

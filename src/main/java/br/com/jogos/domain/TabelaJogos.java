@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -30,7 +32,11 @@ public class TabelaJogos {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataCadastro;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuario_id")
     private TabelaUsuario usuario;
+
+    @OneToMany(mappedBy = "jogoOferecido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TabelaPropostaTroca> propostasOferecidas = new ArrayList<>();
+
 }

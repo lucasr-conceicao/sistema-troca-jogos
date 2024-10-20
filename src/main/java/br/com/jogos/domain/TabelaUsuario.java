@@ -32,7 +32,6 @@ public class TabelaUsuario {
     @Column(name = "preferencia_de_troca")
     private String preferenciaDeTroca;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<TabelaJogos> jogos;
-
 }
