@@ -31,6 +31,15 @@ curl --request POST \
 }'
 ```
 
+Banco de dados sem nenhum cadastro do usuário
+
+![image](https://github.com/user-attachments/assets/bf930016-1494-4d31-89ab-9cecdbfecbbd)
+
+Após rodar a API pelo Insomnia o usuário será cadastrado no banco de dados.
+
+![image](https://github.com/user-attachments/assets/2e6563af-2209-499b-8f94-63fe995b006e)
+
+![image](https://github.com/user-attachments/assets/5ae5792b-20fe-4b1d-b199-a6e4ebb6a4cb)
 
 ```
 curl --request POST \
@@ -56,6 +65,10 @@ curl --request GET \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
 
+Realizando a busca do usuario cadastrado no banco de dados
+
+![image](https://github.com/user-attachments/assets/7f785075-ba8f-4f99-b88d-3469ccfabbc8)
+
 ```
 curl --request PUT \
   --url http://localhost:8080/api-usuarios/v1/atualizar/134218cf-a119-43ca-91f2-680bc590584c \
@@ -71,12 +84,25 @@ curl --request PUT \
 }'
 ```
 
+Atualizando o campo do nome desse usuario cadastrado no banco de dados.
+
+![image](https://github.com/user-attachments/assets/ea044d23-998d-414a-bccb-98ba7f940ca5)
+
+![image](https://github.com/user-attachments/assets/fffea248-6aa7-4692-bed6-90c838f294db)
+
+
 ```
 curl --request DELETE \
   --url http://localhost:8080/api-usuarios/v1/deletar/134218cf-a119-43ca-91f2-680bc590584c \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
+Deletando usuario da base
+
+![image](https://github.com/user-attachments/assets/8c4a5925-e486-4ba5-8d94-83bfcb48d0b3)
+
+![image](https://github.com/user-attachments/assets/bc6bc538-80ca-4dc1-b6c1-1e21bc9fa6e5)
 
 
 #### 
@@ -98,6 +124,13 @@ curl --request POST \
 }'
 ```
 
+
+Cadastrando Jogo para um usuario
+
+![image](https://github.com/user-attachments/assets/49f10d32-efa6-482c-b83b-0647a59576da)
+
+![image](https://github.com/user-attachments/assets/f48457e4-2918-44e6-9184-a617fa5d0fc4)
+
 ```
 curl --request PUT \
   --url http://localhost:8080/api-jogos/v1/atualizar/5c9ae35d-d1c4-4a90-a9fb-1c1f4c0284cf \
@@ -111,6 +144,12 @@ curl --request PUT \
 	"usuario": "56ec3fa4-74a8-40b3-9974-bd2770edc980"
 }'
 ```
+Atualizando informacoes do jogo cadastrado
+
+![image](https://github.com/user-attachments/assets/cee9ded7-06cf-4cca-9380-83c06c0acd89)
+
+![image](https://github.com/user-attachments/assets/89e3da34-559c-465c-a8c2-396fa5b81e1e)
+
 
 ```
 curl --request GET \
@@ -126,6 +165,11 @@ curl --request GET \
 }'
 ```
 
+Listar jogos cadastrados
+
+![image](https://github.com/user-attachments/assets/be917bbc-074d-43e9-b642-37f24c14067e)
+
+
 ```
 curl --request GET \
   --url http://localhost:8080/api-jogos/v1/buscar/db1b4a41-320b-40ab-a1a4-a21321114cc3 \
@@ -133,12 +177,21 @@ curl --request GET \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
 
+Buscar por um jogo especifico
+
+![image](https://github.com/user-attachments/assets/4ad130b3-5831-4d1f-b6b8-a95f783a5d41)
+
 ```
 curl --request DELETE \
   --url http://localhost:8080/api-jogos/v1/deletar/db1b4a41-320b-40ab-a1a4-a21321114cc3 \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
+Deletar jogo
+
+![image](https://github.com/user-attachments/assets/992ef39e-fc68-4b35-ad83-b72bd050e73f)
+
 
 #### 
 - `Funcionalidade 4` <br><br>
