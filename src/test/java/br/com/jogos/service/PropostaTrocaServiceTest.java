@@ -7,6 +7,7 @@ import br.com.jogos.dto.PropostaTrocaDTORequest;
 import br.com.jogos.dto.PropostaTrocaDTOResponse;
 import br.com.jogos.enums.StatusPropostaTroca;
 import br.com.jogos.exception.NotFoundException;
+import br.com.jogos.exception.TrocaNaoPermitidaException;
 import br.com.jogos.repository.PropostaTrocaRepository;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +54,7 @@ class PropostaTrocaServiceTest {
         when(usuarioService.recuperarUsuario(any(UUID.class))).thenReturn(getResponseTabelaUsuario());
         when(propostaTrocaRepository.save(any())).thenReturn(getResponseTabelaTroca());
 
-        PropostaTrocaDTOResponse response = propostaTrocaService.cadastrarProposta(propostaTrocaDTORequest());
+        propostaTrocaService.cadastrarProposta(propostaTrocaDTORequest());
 
         verify(propostaTrocaRepository, times(1)).save(any());
     }
@@ -72,43 +73,73 @@ class PropostaTrocaServiceTest {
 
     @Test
     void deveLancarExceptionAoBuscarPropostaInexistente() {
-        val propostaId = UUID.randomUUID();
+        val propostaId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
+        when(usuarioService.recuperarUsuario(any(UUID.class))).thenReturn(getResponseTabelaUsuario());
         when(propostaTrocaRepository.findById(propostaId)).thenReturn(Optional.empty());
-
         assertThrows(NotFoundException.class, () -> propostaTrocaService.buscarPropostaTrocaPorId(propostaId));
     }
 
-//    @Test
-//    void deveResponderPropostaAceitaComSucesso() {
-//        val propostaId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
-//        val usuarioId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
-//
-//        when(usuarioService.recuperarUsuario(usuarioId)).thenReturn(getResponseTabelaUsuario());
-//        when(propostaTrocaRepository.findById(propostaId)).thenReturn(Optional.of(getResponseTabelaTroca()));
-//        when(propostaTrocaRepository.save(getResponseTabelaTroca())).thenReturn(getResponseTabelaTroca());
-//
-//        propostaTrocaService.responderPropostaAceita(propostaId, usuarioId);
-//
-//        verify(propostaTrocaRepository, times(1)).save(getResponseTabelaTroca());
-//    }
-//
-//    @Test
-//    void deveExcluirPropostaComSucesso() {
-//        val propostaId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
-//
-//        val proposta = new TabelaPropostaTroca();
-//
-//        when(propostaTrocaRepository.findById(propostaId)).thenReturn(Optional.of(proposta));
-//
-//        propostaTrocaService.excluirProposta(propostaId);
-//
-//        verify(propostaTrocaRepository, times(1)).deleteById(propostaId);
-//    }
+    @Test
+    void deveLancarExceptionAoRejeitarUmaproposta() {
+        val propostaId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
+        when(usuarioService.recuperarUsuario(any(UUID.class))).thenReturn(getResponseTabelaUsuario());
+        when(propostaTrocaRepository.findById(propostaId)).thenReturn(Optional.ofNullable(getResponseTabelaTrocaUsuarioSemPropostaDeTroca()));
+        assertThrows(TrocaNaoPermitidaException.class, () -> propostaTrocaService.responderPropostaRecusada(propostaId, UUID.randomUUID()));
+    }
+
+    @Test
+    void deveLancarExceptionAoAceitarUmaproposta() {
+        val propostaId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
+        when(usuarioService.recuperarUsuario(any(UUID.class))).thenReturn(getResponseTabelaUsuario());
+        when(propostaTrocaRepository.findById(propostaId)).thenReturn(Optional.ofNullable(getResponseTabelaTrocaUsuarioSemPropostaDeTroca()));
+        assertThrows(TrocaNaoPermitidaException.class, () -> propostaTrocaService.responderPropostaAceita(propostaId, UUID.randomUUID()));
+    }
+
+    @Test
+    void deveRejeitarUmaPropostaDeTroca() {
+        val propostaId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
+        val usuarioId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
+        when(usuarioService.recuperarUsuario(any(UUID.class))).thenReturn(getResponseTabelaUsuario());
+        when(propostaTrocaRepository.findById(propostaId)).thenReturn(Optional.ofNullable(getResponseTabelaTroca()));
+        var response = propostaTrocaService.responderPropostaRecusada(propostaId, usuarioId);
+        verify(propostaTrocaRepository, times(1)).save(any());
+    }
+
+    @Test
+    void deveAceitarUmaPropostaDeTroca() {
+        val propostaId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
+        val usuarioId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
+        when(usuarioService.recuperarUsuario(any(UUID.class))).thenReturn(getResponseTabelaUsuario());
+        when(propostaTrocaRepository.findById(propostaId)).thenReturn(Optional.ofNullable(getResponseTabelaTroca()));
+        propostaTrocaService.responderPropostaAceita(propostaId, usuarioId);
+        verify(propostaTrocaRepository, times(1)).save(any());
+    }
+
+    @Test
+    void deveExcluirUmaPropostaDeTrocaComSucesso() {
+        val propostaId = UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec");
+        when(propostaTrocaRepository.findById(propostaId)).thenReturn(Optional.ofNullable(getResponseTabelaTroca()));
+        propostaTrocaService.excluirProposta(propostaId);
+        verify(propostaTrocaRepository, times(1)).deleteById(propostaId);
+    }
+
+    private TabelaPropostaTroca getResponseTabelaTrocaUsuarioSemPropostaDeTroca() {
+        return TabelaPropostaTroca.builder()
+                .id(UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec"))
+                .statusTroca(StatusPropostaTroca.ACEITA)
+                .dataResposta(LocalDateTime.parse("2024-10-20T03:47:35.864468"))
+                .dataCriacao(LocalDateTime.parse("2024-10-20T03:47:35.864468"))
+                .usuarioOfertante(getResponseTabelaUsuario())
+                .usuarioDestinatario(getResponseTabelaUsuarioSemPropostaDeTroca())
+                .jogoDesejado(getResponseTabelaJogos())
+                .jogoOferecido(getResponseTabelaJogos())
+                .build();
+    }
 
     private TabelaPropostaTroca getResponseTabelaTroca() {
         return TabelaPropostaTroca.builder()
                 .id(UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec"))
-                .statusTroca(StatusPropostaTroca.ACEITA)
+                .statusTroca(StatusPropostaTroca.PENDENTE)
                 .dataResposta(LocalDateTime.parse("2024-10-20T03:47:35.864468"))
                 .dataCriacao(LocalDateTime.parse("2024-10-20T03:47:35.864468"))
                 .usuarioOfertante(getResponseTabelaUsuario())
@@ -133,8 +164,6 @@ class PropostaTrocaServiceTest {
         );
     }
 
-
-
     private TabelaJogos getResponseTabelaJogos() {
         return TabelaJogos.builder()
                 .id(UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec"))
@@ -147,6 +176,14 @@ class PropostaTrocaServiceTest {
     private TabelaUsuario getResponseTabelaUsuario() {
         return TabelaUsuario.builder()
                 .id(UUID.fromString("f23afb6d-26df-4f12-89b6-18a0674675ec"))
+                .email("lucas@hotmail.com")
+                .username("lucasfiap")
+                .build();
+    }
+
+    private TabelaUsuario getResponseTabelaUsuarioSemPropostaDeTroca() {
+        return TabelaUsuario.builder()
+                .id(UUID.fromString("f23afb6d-26dd-4f12-89b6-18a0674675ec"))
                 .email("lucas@hotmail.com")
                 .username("lucasfiap")
                 .build();

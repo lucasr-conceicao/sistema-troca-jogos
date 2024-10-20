@@ -78,7 +78,6 @@ public class PropostaTrocaService {
     @Transactional
     public void excluirProposta(UUID propostaId) {
         var proposta = this.recuperarProposta(propostaId);
-
         propostaTrocaRepository.deleteById(proposta.getId());
     }
 
