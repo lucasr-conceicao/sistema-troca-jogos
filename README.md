@@ -212,6 +212,13 @@ curl --request POST \
 }'
 ```
 
+Cadastrando uma troca entre usuarios
+
+![image](https://github.com/user-attachments/assets/9fae616e-5c2c-436c-a8d6-fc8054f02884)
+
+![image](https://github.com/user-attachments/assets/aa4f9ba9-4e61-45b4-9be3-476e75bfeeb4)
+
+
 ```
 curl --request GET \
   --url http://localhost:8080/api-propostas-troca/v1/listar/usuario_ofertante/56ec3fa4-74a8-40b3-9974-bd2770edc987 \
@@ -219,30 +226,62 @@ curl --request GET \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
 
+Listando propostas pendentes
+
+![image](https://github.com/user-attachments/assets/7e6defcb-9598-480e-8f3e-f0a0069d11e0)
+
+
 ```
 curl --request PUT \
   --url http://localhost:8080/api-propostas-troca/v1/responder/dbfdf865-be6a-4ef8-9bbc-32b2765dd594/aceitar \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
+Aceitando proposta de troca
+
+![image](https://github.com/user-attachments/assets/4d9ccb5f-41d7-4ced-9536-af3669f44d72)
+
+![image](https://github.com/user-attachments/assets/60121158-c96b-4b09-89c3-88fcbe752dc8)
+
+
 ```
 curl --request PUT \
   --url http://localhost:8080/api-propostas-troca/v1/responder/dbfdf865-be6a-4ef8-9bbc-32b2765dd594/rejeitar \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
+Rejeitando proposta de troca
+
+![image](https://github.com/user-attachments/assets/bf69f325-b004-41a1-9137-fa1e2c1bff7e)
+
+![image](https://github.com/user-attachments/assets/d3aa5b87-44e5-49fe-9cd5-c649c4973640)
+
+
 ```
 curl --request GET \
   --url http://localhost:8080/api-propostas-troca/v1/buscar/proposta_troca/13b23f87-17de-45c9-a4ef-f89e7e743c0c \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
+Buscar uma proposta de troca especifica
+
+![image](https://github.com/user-attachments/assets/b9453604-1d33-4d98-a330-1fb47b8b93a9)
+
+
 ```
 curl --request DELETE \
   --url http://localhost:8080/api-propostas-troca/v1/deletar/13b23f87-17de-45c9-a4ef-f89e7e743c0c \
   --header 'User-Agent: insomnia/10.0.0' \
   --cookie JSESSIONID=6CF1364A2B25F7AD0A4B2A7C85710EC1
 ```
+
+Deletando uma proposta de troca
+
+![image](https://github.com/user-attachments/assets/a23e83c9-53cd-489e-bc45-1a9510c0aeaf)
+
 
 #### 
 - `Funcionalidade 5` <br><br>
