@@ -33,7 +33,7 @@ class JogosServiceTest {
     private JogosRepository jogosRepository;
 
     @Mock
-    private UsuarioService usuarioService;
+    private UsuarioServiceTest usuarioService;
 
     @InjectMocks
     private JogosService jogosService;
