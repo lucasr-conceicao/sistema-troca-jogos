@@ -5,6 +5,7 @@ import br.com.jogos.dto.PropostaTrocaDTORequest;
 import br.com.jogos.dto.PropostaTrocaDTOResponse;
 import br.com.jogos.enums.StatusPropostaTroca;
 import br.com.jogos.exception.NotFoundException;
+import br.com.jogos.exception.TrocaNaoPermitidaException;
 import br.com.jogos.repository.PropostaTrocaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,22 +49,29 @@ public class PropostaTrocaService {
 
     @Transactional
     public PropostaTrocaDTOResponse responderPropostaAceita(UUID propostaId, UUID usuarioId) {
-        usuarioService.recuperarUsuario(usuarioId);
-        var proposta = this.recuperarProposta(propostaId);
-        proposta.setStatusTroca(StatusPropostaTroca.ACEITA);
-        proposta.setDataResposta(LocalDateTime.now());
-        propostaTrocaRepository.save(proposta);
-        return converterEntityEmDTO(proposta);
+        var usuario = usuarioService.recuperarUsuario(usuarioId);
+        var proposta = recuperarProposta(propostaId);
+        if (usuario.getId().equals(proposta.getUsuarioDestinatario().getId()) && proposta.getStatusTroca().equals(PENDENTE)) {
+            proposta.setStatusTroca(StatusPropostaTroca.ACEITA);
+            proposta.setDataResposta(LocalDateTime.now());
+            propostaTrocaRepository.save(proposta);
+            return converterEntityEmDTO(proposta);
+        }
+        throw new TrocaNaoPermitidaException("Usuário não pode Aceitar a troca pois não há proposta PENDENTE para ele.");
     }
 
     @Transactional
     public PropostaTrocaDTOResponse responderPropostaRecusada(UUID propostaId, UUID usuarioId) {
-        usuarioService.recuperarUsuario(usuarioId);
+        var usuario = usuarioService.recuperarUsuario(usuarioId);
         var proposta = this.recuperarProposta(propostaId);
-        proposta.setStatusTroca(StatusPropostaTroca.REJEITADA);
-        proposta.setDataResposta(LocalDateTime.now());
-        propostaTrocaRepository.save(proposta);
-        return converterEntityEmDTO(proposta);
+        if (usuario.getId().equals(proposta.getUsuarioDestinatario().getId()) && proposta.getStatusTroca().equals(PENDENTE)) {
+            proposta.setStatusTroca(StatusPropostaTroca.REJEITADA);
+            proposta.setDataResposta(LocalDateTime.now());
+            propostaTrocaRepository.save(proposta);
+            return converterEntityEmDTO(proposta);
+        } else {
+            throw new TrocaNaoPermitidaException("Usuário não pode Rejeitar a troca pois não há proposta PENDENTE para ele.");
+        }
     }
 
 

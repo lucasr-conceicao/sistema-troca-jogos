@@ -1,6 +1,7 @@
 package br.com.jogos.handler;
 
 import br.com.jogos.exception.NotFoundException;
+import br.com.jogos.exception.TrocaNaoPermitidaException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,13 @@ public class ControllerHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    private ResponseEntity<JsonHandler> handlerDataIntegrityViolationException(NotFoundException ex, HttpServletRequest httpServlet) {
+    private ResponseEntity<JsonHandler> handlerDataIntegrityViolationException(DataIntegrityViolationException ex, HttpServletRequest httpServlet) {
         return montarRetorno(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), httpServlet.getRequestURI(), ex.getMessage());
+    }
+
+    @ExceptionHandler(TrocaNaoPermitidaException.class)
+    private ResponseEntity<JsonHandler> handlerTrocaNaoPermitidaException(TrocaNaoPermitidaException ex, HttpServletRequest httpServlet) {
+        return montarRetorno(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), httpServlet.getRequestURI(), ex.getMessage());
     }
 
     private ResponseEntity<JsonHandler> montarRetorno(HttpStatus httpStatus, Integer code, String path, String mensagem) {
